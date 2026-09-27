@@ -86,7 +86,7 @@ def scan(ip, range_ports,config):
             codice_errore
             )
         
-     
+     #modifica
 
             
 
