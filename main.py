@@ -1,19 +1,9 @@
 import socket
-import errno
 import ipaddress
 import time
-from config import CONFIG,STATUS
+from config import CONFIG
 from models import ScanResult
 
-
-outcomes = {0 : STATUS["STATUS_OPEN"],
-            errno.ECONNREFUSED:STATUS["STATUS_CLOSED"],
-            errno.ENETUNREACH:"Rete non raggiungibile",
-            errno.ETIMEDOUT:"TimedOut"}
-error_messages = {0: None,
-            errno.ECONNREFUSED:"Connection refused ",
-            errno.ENETUNREACH:"Rete non raggiungibile",
-            errno.ETIMEDOUT:"TimedOut"}
 
 
 def insert_ip():
@@ -61,46 +51,17 @@ def check_port(ip, porta, config):
 
     return risultato
 
-def get_error_message(errore):
-    messaggio = error_messages.get(errore, f"Errore Sconosciuto")
-    return messaggio
-
 def scan(ip, range_ports,config):
 
     lista_porte = []
     for port in range(range_ports[0], range_ports[1]+1):
-        risultato = check_port(ip, port, config)
-        service = "-"
-        codice_errore = risultato
-        if risultato == 0:
-            service = get_service(port)
-            codice_errore = None
-
-
-             
+        risultato = check_port(ip, port, config)     
         scansione= ScanResult(
             port,
-            outcomes.get(risultato, "Errore Sconosciuto"),
-            service,
-            get_error_message(risultato),
-            codice_errore
-            )
-        
-     #modifica
-
-            
-
-
+            risultato)
         lista_porte.append(scansione)
 
     return lista_porte
-
-def get_service(port):
-    try:
-        s = socket.getservbyport(port)
-        return s
-    except OSError:
-        return "Unknown"
 
 def filter_result(scansioni):
     while True:
@@ -167,9 +128,9 @@ def show_result(scansioni, stat, tempo):
     print("-" * 52)
     for scansione in scansioni:
         port = scansione.port
-        status = scansione.status
-        service = scansione.servizio
-        error = scansione.error
+        status = scansione.status["status"]
+        service = scansione.service
+        error = scansione.status["error"]
         error_code = scansione.error_code 
         print(f"{port:<8} {status:<11} {service:<12} {error:<12} {error_code}\n")
     print("=" * 52)
