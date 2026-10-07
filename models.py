@@ -1,16 +1,16 @@
-from config import STATUS
+from config import STATUS_CONFIG
 import errno
 import socket
 
 class ScanResult:
-    status_config = STATUS
+    status_config = STATUS_CONFIG
     result_map =  {
         0 : {
-            "status": STATUS["STATUS_OPEN"],
+            "status": STATUS_CONFIG["STATUS_OPEN"],
             "error": None
         },
         errno.ECONNREFUSED:{
-            "status":STATUS["STATUS_CLOSED"],
+            "status":STATUS_CONFIG["STATUS_CLOSED"],
             "error":"Connection refused"
         },
         errno.ENETUNREACH:{
