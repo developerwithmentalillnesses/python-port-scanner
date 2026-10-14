@@ -61,7 +61,7 @@ def show_result(scansioni, stat, tempo):
         service = scansione.service
         error = scansione.status["error"]
         error_code = scansione.error_code 
-        print(f"{port:<8} {status:<11} {service:<12} {error:<12} {error_code}\n")
+        print(f"{port:<8} {status:<11} {service:<12} {error} {error_code}\n")
     print("=" * 52)
     
 
