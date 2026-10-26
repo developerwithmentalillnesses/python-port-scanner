@@ -55,7 +55,7 @@ The CLI uses Python's standard library and the project's internal modules. The G
 Clone the repository:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/developerwithmentalillnesses/python-port-scanner.git
 cd Port-Scanner
 ```
 
