@@ -56,7 +56,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/developerwithmentalillnesses/python-port-scanner.git
-cd Port-Scanner
+cd port-Scanner
 ```
 
 Install the GUI dependency:
